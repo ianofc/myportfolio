@@ -1,0 +1,421 @@
+/* Define estilos globais para o modo escuro */
+body.dark {
+  background-color: #222c36; /* Cor de fundo do corpo no modo escuro */
+  color: #f8f8f8; /* Cor do texto padrão no modo escuro */
+}
+
+body.dark a {
+  color: #0a3380; /* Cor dos links no modo escuro */
+}
+
+body.dark header {
+  background-color: #cadaf7; /* Cor de fundo do cabeçalho no modo escuro */
+}
+
+body.dark footer {
+  background-color: #cadaf7; /* Cor de fundo do rodapé no modo escuro */
+}
+
+body.dark footer p {
+  color: #000000; /* Cor do texto do rodapé no modo escuro */
+}
+
+/* Cor do texto para parágrafos no modo escuro */
+body.dark p {
+  color: #ffffff; /* Texto padrão para parágrafos no modo escuro */
+}
+
+body.dark .experience h4 {
+  color: #ffffff; /* Cor do texto dos anos de experiência no modo escuro */
+}
+
+body.dark .experience p {
+  color: #ffffff; /* Cor do texto dos projetos concluídos no modo escuro */
+}
+
+/* Ajuste de margem para subir o texto */
+.texto-sobre {
+  margin-top: -5000px; /* Ajuste para subir o texto em 5 centímetros */
+}
+
+/* Estilos do cabeçalho */
+header {
+  background-color: #f7fafc; /* Cor de fundo do cabeçalho */
+  padding: 1rem; /* Espaçamento interno do cabeçalho */
+}
+
+header .container {
+  display: flex; /* Usar flexbox para layout */
+  justify-content: space-between; /* Espaçar os itens do cabeçalho */
+  align-items: center; /* Alinhar itens verticalmente ao centro */
+}
+
+header nav a {
+  color: #4a5568; /* Cor dos links de navegação */
+  margin-right: 1rem; /* Margem à direita dos links */
+}
+
+header nav a:hover {
+  color: #2b6cb0; /* Cor dos links ao passar o mouse */
+}
+
+header button {
+  background-color: #2b6cb0; /* Cor de fundo do botão */
+  color: #ffffff; /* Cor do texto do botão */
+  padding: 0.5rem 1rem; /* Espaçamento interno do botão */
+  border-radius: 0.25rem; /* Bordas arredondadas do botão */
+}
+
+/* Estilo do botão de alternância de tema */
+.theme-toggle {
+  padding: 8px; /* Espaçamento interno do botão */
+  border-radius: 50%; /* Bordas arredondadas para um formato circular */
+}
+
+.theme-toggle.bg-blue {
+  background-color: #4299e1; /* Cor de fundo azul do botão */
+  color: white; /* Cor do texto do botão */
+}
+
+.theme-toggle.bg-yellow {
+  background-color: #f6ad55; /* Cor de fundo amarelo do botão */
+  color: white; /* Cor do texto do botão */
+}
+
+/* Seção principal */
+main {
+  display: flex; /* Usar flexbox para layout */
+  flex-direction: column; /* Direção da coluna para os itens */
+  align-items: center; /* Alinhar itens ao centro */
+  margin-top: 2rem; /* Margem superior da seção principal */
+}
+
+main .flex {
+  flex-wrap: wrap; /* Permitir quebra de linha nos itens */
+  justify-content: center; /* Centralizar os itens */
+}
+
+main img {
+  max-width: 100%; /* Imagem não excede a largura do contêiner */
+  height: auto; /* Altura automática para manter a proporção */
+  border-radius: 0.5rem; /* Bordas arredondadas das imagens */
+}
+
+/* Estilo específico para a foto de Ian Santos */
+main .foto-ian-santos {
+  width: 32rem; /* Largura da imagem */
+}
+
+/* Estilo de fundo da página inicial */
+main .background-home {
+  width: 100%; /* Largura total */
+  text-align: right; /* Alinhamento à direita do texto */
+}
+
+main .text-center {
+  margin-top: 2rem; /* Margem superior da seção de texto centralizado */
+  text-align: center; /* Alinhamento central do texto */
+}
+
+main h2 {
+  font-size: 15rem; /* Tamanho da fonte do título */
+  font-weight: bold; /* Peso da fonte do título */
+}
+
+main h3 {
+  color: #2b6cb0; /* Cor do título de nível 3 */
+  font-size: 5rem; /* Tamanho da fonte do título de nível 3 */
+  font-weight: bold; /* Peso da fonte do título de nível  3 */
+}
+
+main p {
+  color: #4a5568; /* Cor do texto do parágrafo */
+  margin-top: 1rem; /* Margem superior do parágrafo */
+  font-size: 1.30rem; /* Tamanho maior para o parágrafo */
+}
+
+main button {
+  margin-top: 1rem; /* Margem superior do botão */
+  background-color: #2b6cb0; /* Cor de fundo do botão */
+  color: white; /* Cor do texto do botão */
+  padding: 0.5rem 1rem; /* Espaçamento interno do botão */
+  border-radius: 0.25rem; /* Bordas arredondadas do botão */
+}
+
+/* Seção de Experiência e Projetos */
+main .experience {
+  display: flex; /* Usar flexbox para layout */
+  justify-content: center; /* Centralizar os itens */
+  gap: 2rem; /* Espaçamento entre os itens */
+  margin-top: 2rem; /* Margem superior da seção de experiência */
+}
+
+main .experience div {
+  text-align: center; /* Alinhar texto ao centro */
+}
+
+main .experience h4 {
+  font-size: 2.25rem; /* Tamanho da fonte do título de experiência */
+  font-weight: bold; /* Peso da fonte do título de experiência */
+  color: #2b6cb0; /* Cor do título de experiência */
+}
+
+main .experience p {
+  color: #4a5568; /* Cor do texto da descrição de experiência */
+}
+
+/* Estilos do rodapé */
+footer {
+  background-color: #f7fafc; /* Cor de fundo do rodapé */
+  padding: 1rem; /* Espaçamento interno do rodapé */
+  text-align: center; /* Centralizar texto do rodapé */
+}
+
+footer p {
+  color: #4a5568; /* Cor do texto do rodapé */
+}
+
+body {
+  margin: 0; /* Remove margens do corpo */
+  padding: 0; /* Remove preenchimento do corpo */
+}
+
+/* Estilo para a imagem à esquerda */
+.imagem-esquerda {
+  position: relative; /* Permite posicionar a imagem em relação à tela */
+  top: 500; /* Alinha a parte superior da imagem com a tela */
+  left: -18%; /* Move a imagem para a extremidade esquerda */
+  height: 350%; /* Ajusta a altura automaticamente */
+  max-width: 100%; /* Garante que a imagem não exceda a largura da tela */
+  width: 24rem; /* Aumenta o tamanho da imagem */
+  object-fit: cover; /* Garante que a imagem preencha sem distorcer */
+  margin-top: 1rem; /* Alinha um pouco a imagem para que ela fique no mesmo nível do texto */
+}
+
+/* Ajuste no container de flexbox para garantir alinhamento adequado */
+.main .flex {
+  flex-direction: column; /* Direção da coluna para os itens */
+  justify-content: center; /* Centralizar os itens */
+  align-items: center; /* Alinhar itens ao centro */
+  display: flex; /* Usar flexbox para layout */
+}
+
+@media (min-width: 1024px) {
+  .main .flex {
+      flex-direction: row; /* Direção da linha para telas maiores */
+      justify-content: space-between; /* Espaçar os itens */
+      align-items: center; /* Alinhar itens verticalmente ao centro */
+  }
+}
+
+main .lg\:flex-row {
+  flex-direction: row; /* Direção da linha para telas grandes */
+}
+
+main .coluna-imagem {
+  display: flex; /* Usar flexbox para layout */
+  justify-content: center; /* Centralizar os itens */
+  align-items: center; /* Alinhar itens ao centro */
+}
+
+main .text-center {
+  text-align: center; /* Alinhamento central do texto */
+  padding-top: 0.5rem; /* Ajusta o espaço entre a imagem e o texto */
+}
+
+/* Ajuste na classe imagem-direita */
+.imagem-direita { 
+  position: absolute; /* Permite posicionar a imagem em relação à tela */
+  top: 0; /* Alinha a parte superior da imagem */
+  right: 0; /* Move a imagem um pouco para a direita */
+  height: auto; /* Ajusta a altura automaticamente */
+  max-width: 100%; /* Garante que a imagem não exceda a largura da tela */
+  width: 36rem; /* Aumenta o tamanho da imagem */
+  object-fit: cover; /* Garante que a imagem preencha sem distorcer */
+  z-index: -1; /* Coloca a imagem atrás do conteúdo */
+  opacity: 0.10; /* Define transparência da imagem */
+}
+
+/* Bandeiras - Ajuste para garantir que fiquem acima da imagem */
+.container img {
+  position: relative; /* Garantir que as bandeiras fiquem acima */
+  z-index: 1; /* Eleva o nível das bandeiras */
+}
+
+.container {
+  display: flex; /* Usar flexbox para layout */
+  justify-content: center; /* Centralizar o conteúdo */
+  align-items: center; /* Alinhar verticalmente */
+}
+
+.hex {
+  font-size: 24px; /* Tamanho da fonte do hexágono */
+  color: #3498db; /* Cor do hexágono */
+  cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
+  position: relative; /* Permite posicionar elementos filhos */
+  display: inline-block; /* Permite definir a largura */
+}
+
+.reveal {
+  visibility: hidden; /* Inicialmente oculto */
+  position: absolute; /* Posicionamento absoluto em relação ao hexágono */
+  top: 100%; /* Alinha abaixo do hexágono */
+  left: 0; /* Alinha à esquerda do hexágono */
+  background-color: #fff; /* Cor de fundo da revelação */
+  border: 1px solid #3498db; /* Borda do elemento revelado */
+  padding: 5px; /* Espaçamento interno */
+  font-size: 20px; /* Tamanho da fonte */
+  color: #333; /* Cor do texto */
+  z-index: 1; /* Eleva o nível do elemento revelado */
+  white-space: nowrap; /* Impede quebra de linha */
+}
+
+.hex:hover .reveal {
+  visibility: visible; /* Torna visível ao passar o mouse */
+}
+
+/* Adicione isso ao seu arquivo CSS */
+.sparkle-button {
+  position: relative; /* Permite posicionar elementos filhos */
+  display: inline-block; /* Permite definir a largura */
+  padding: 10px 20px; /* Espaçamento interno do botão */
+  color: #fff; /* Cor do texto do botão */
+  background-color: #4a90e2; /* Cor de fundo do botão */
+  border: none; /* Remove borda do botão */
+  border-radius: 5px; /* Bordas arredondadas do botão */
+  font-family: 'Raleway', sans-serif; /* Fonte do botão */
+  overflow: hidden; /* Oculta conteúdo que excede o botão */
+  cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
+  transition: color 0.4s; /* Transição suave para a cor do texto */
+}
+
+.sparkle-button::before {
+  content: ''; /* Conteúdo vazio para o efeito */
+  position: absolute; /* Posicionamento absoluto */
+  top: 50%; /* Alinha verticalmente ao centro */
+  left: 50%; /* Alinha horizontalmente ao centro */
+  width: 300%; /* Largura do efeito */
+  height: 300%; /* Altura do efeito */
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 10%, rgba(255,255,255,0) 20%); /* Efeito de brilho */
+  transform: translate(-50%, -50%) scale(0); /* Inicialmente invisível */
+  transition: transform 0.4s; /* Transição suave para o efeito */
+  z-index: 0; /* Coloca atrás do texto */
+}
+
+.sparkle-button:hover::before {
+  transform: translate(-50%, -50%) scale(1); /* Torna visível ao passar o mouse */
+}
+
+.sparkle-button:hover {
+  color: #4a90e2; /* Muda a cor do texto ao passar o mouse */
+}
+
+/* CSS para os links da navbar */
+.nav-link {
+  color: #4a90e2; /* Cor dos links de navegação */
+  position: relative; /* Permite posicionar elementos filhos */
+  overflow: hidden; /* Oculta conteúdo que excede o link */
+  display: inline-block; /* Permite definir a largura */
+}
+
+.nav-link::after {
+  content: ''; /* Conteúdo vazio para o efeito */
+  position: absolute; /* Posicionamento absoluto */
+  left: 0; /* Alinha à esquerda do link */
+  bottom: 0; /* Alinha na parte inferior do link */
+  width: 100%; /* Largura total do efeito */
+  height: 2px; /* Altura do efeito */
+  background: #4a90e2; /* Cor do efeito */
+  transform: scaleX(0); /* Inicialmente invisível */
+  transition: transform 0.3s ease; /* Transição suave para o efeito */
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1); /* Tor na visível ao passar o mouse */
+}
+
+/* CSS para os botões sociais */
+.social-button {
+  transition: transform 0.3s; /* Transição suave para transformação */
+}
+
+.social-button:hover {
+  transform: scale(1.2); /* Aumenta o tamanho ao passar o mouse */
+}
+
+/* CSS para o botão "Baixar CV" */
+.download-button {
+  position: relative; /* Permite posicionar elementos filhos */
+  display: inline-block; /* Permite definir a largura */
+  padding: 10px 20px; /* Espaçamento interno do botão */
+  color: #fff; /* Cor do texto do botão */
+  background-color: #061775; /* Cor de fundo do botão */
+  border: none; /* Remove borda do botão */
+  border-radius: 5px; /* Bordas arredondadas do botão */
+  font-family: 'Raleway', sans-serif; /* Fonte do botão */
+  overflow: hidden; /* Oculta conteúdo que excede o botão */
+  cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
+  transition: color 0.4s; /* Transição suave para a cor do texto */
+}
+
+.download-button::before {
+  content: ''; /* Conteúdo vazio para o efeito */
+  position: absolute; /* Posicionamento absoluto */
+  top: 50%; /* Alinha verticalmente ao centro */
+  left: 50%; /* Alinha horizontalmente ao centro */
+  width: 300%; /* Largura do efeito */
+  height: 300%; /* Altura do efeito */
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 10%, rgba(255,255,255,0) 20%); /* Efeito de brilho */
+  transform: translate(-50%, -50%) scale(0); /* Inicialmente invisível */
+  transition: transform 0.4s; /* Transição suave para o efeito */
+  z-index: 0; /* Coloca atrás do texto */
+}
+
+.download-button:hover::before {
+  transform: translate(-50%, -50%) scale(1); /* Torna visível ao passar o mouse */
+}
+
+.download-button:hover {
+  color: #4a90e2; /* Muda a cor do texto ao passar o mouse */
+}
+
+/* Estilo para o nome do cabeçalho */
+.header-name {
+  display: inline-block; /* Para que possamos definir a largura */
+  width: 100px; /* Defina uma largura que acomode "Ian Santos" */
+  
+  white-space: nowrap; /* Para evitar quebra de linha */
+  font-size: 2rem; /* Tamanho da fonte padrão */
+  transition: font-size 0.3s ease; /* Para transição suave */
+}
+
+.header-name.hexadecimal {
+  font-size: 0.6rem; /* Tamanho da fonte reduzido para o hexadecimal */
+}
+
+    .tooltip {
+        position: relative;
+        display: inline-block;
+    }
+
+    .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 120px;
+        background-color: #555;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%; /* Position the tooltip above the icon */
+        left: 50%;
+        margin-left: -60px;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+    }

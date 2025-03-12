@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Jogo da Memória - Ian Santos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .sidebar {
+            transition: width 0.3s;
+        }
+
+        .sidebar.expanded {
+            width: 200px;
+        }
+
+        .sidebar.collapsed {
+            width: 60px;
+        }
+
+        .flag:hover {
+            transform: scale(1.1);
+            transition: transform 0.2s;
+        }
+
+        .dark .bg-white {
+            background-color: #2a4365;
+        }
+
+        .dark .text-gray-600,
+        .dark .text-black {
+            color: #f7fafc;
+        }
+
+        .dark .bg-gray-100 {
+            background-color: #1a202c;
+        }
+
+        .dark .bg-blue-600 {
+            background-color: #1a202c;
+        }
+
+        .dark .text-white-important {
+            color: #ffffff !important;
+        }
+
+        .dark .carousel-container {
+            background: linear-gradient(to right, #1a202c, #2d3748);
+        }
+
+        .carousel-container {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 5000px;
+            margin-left: 200px;
+            margin-right: auto;
+        }
+
+        .card {
+            perspective: 1000px;
+            border: none; /* Remover a borda padrão */
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5); /* Efeito esfumaçado */
+        }
+
+        .card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            visibility: hidden; /* Inicialmente oculto */
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .skills-container {
+            margin-top: 20px;
+        }
+
+        .skill {
+            text-align: center;
+            margin: 10px;
+        }
+
+        .skill img {
+            width: 50px; /* Ajuste o tamanho da imagem conforme necessário */
+            height: 50px;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-900 flex">
+    <div class="sidebar bg-blue-600 dark:bg-blue-900 text-white h-screen collapsed flex flex-col" id="sidebar">
+        <div class="flex items-center justify-between p-4">
+            <button class="text-white focus:outline-none" id="toggleSidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="container mx-auto mt-2 flex justify-between items-center">
+                <span class="ml-2 text-lg font-bold hidden">Ian Santos</span>
+            </div>
+        </div>
+        <nav class="flex flex-col mt-4">
+            <a class="flex items-center p-4 hover:bg-blue-700 dark:hover:bg-blue-800" href="/">
+                <i class="fas fa-home"></i>
+                <span class="ml-2 hidden">Home</span>
+            </a>
+            <a class="flex items-center p-4 hover:bg-blue-700 dark:hover:bg-blue-800" href="/about">
+                <i class="fas fa-info-circle"></i>
+                <span class="ml-2 hidden">About</span>
+            </a>
+            <a class="flex items-center p-4 hover:bg-blue-700 dark:hover:bg-blue-800" href="/projects">
+                <i class="fas fa-project-diagram"></i>
+                <span class="ml-2 hidden">Projects</span>
+            </a>
+            <a class="flex items-center p-4 hover:bg-blue-700 dark:hover:bg-blue-800" href="/skills">
+                <i class="fas fa-laptop-code"></i>
+                <span class="ml-2 hidden">Skills</span>
+            </a>
+            <a class="flex items-center p-4 hover:bg-blue-700 dark:hover:bg-blue-800" href="/contact">
+                <i class="fas fa-envelope"></i>
+                <span class="ml-2 hidden">Contacts</span>
+            </a>
+        </nav>
+    </div>
+    <main class="flex flex-col w-full p-4 mt-2">
+        <div class="flex justify-between items-center w-full p-4 mt-2">
+            <div class="relative inline-block w-20 h-7 mb-4">
+                <input class="hidden" id="toggle" onchange="toggleTheme()" type="checkbox" />
+                <label class="cursor-pointer" for="toggle">
+                    <div class="w-full h-full flex items-center justify-between bg-yellow-400 dark:bg-blue-900 rounded-full p-1 transition-colors duration-500">
+                        <div class="w-5 h-5 bg-white rounded-full shadow-md flex items-center justify-center">
+                            <i class="fas fa-sun text-yellow-400"></i>
+                        </div>
+                        <div class="w-5 h-5 bg-white rounded-full shadow-md flex items-center justify-center">
+                            <i class="fas fa-moon text-blue-900"></i>
+                        </div>
+                    </div>
+                </label>
+            </div>
+
+            <div class="flex justify-end space-x-4 mb-4" style="margin-top: 5px;">
+                <img alt="Bandeira do Brasil" class="flag cursor-pointer" height="15" onclick="translateToPortugues()" src="static/icons/brasil.png" width="30" />
+                <img alt="Bandeira dos Estados Unidos" class="flag cursor-pointer" height="15" onclick="translateToEnglish()" src="static/icons/usa.png" width="30" />
+                <img alt="Bandeira da Espanha" class="flag cursor-pointer" height="15" onclick="translateToSpanish()" src="static/icons/espanha.png" width="30" />
+                <img alt="Bandeira da França" class="flag cursor-pointer" height="15" onclick="translateToFrench()" src="static/icons/franca.png" width="30" />
+                <img alt="Bandeira da Alemanha" class="flag cursor-pointer" height="15" onclick="translateToGerman()" src="static/icons/alemanha.png" width="30" />
+                <img alt="Bandeira da China" class="flag cursor-pointer" height="15" onclick="translateToMandarin()" src="static/icons/china.png" width="30" />
+                <img alt="Bandeira do Japão" class="flag cursor-pointer" height="15" onclick="translateToJapanese()" src="static/icons/japao.png" width="30" />
+            </div>
+        </div>
+
+        <div class="container mx-auto p-4 flex justify-center">
+            <div class="flex flex-col md:flex-row w-full md:w-3/4">
+                <div class="w-full md:w-4/5 bg-gradient-to-b from-gray-400 to-black p-4 rounded-l-lg mb-4 md:mb-0">
+                    <h2 class="text-2xl font-bold text-white mb-4">Jogo da Memória das Minhas Habilidades</h2>
+                    <div id="gameBoard" class="grid grid-cols-6 gap-4 hidden"> <!-- Alterado para 6 colunas -->
+                        <!-- Cards will be added here dynamically -->
+                    </div>
+                </div>
+                <div class="w-full md:w-1/3 bg-gradient-to-b from-blue-400 to-blue-900 p-4 rounded-r-lg text-white">
+                    <h2 class="text-2xl font-bold mb-4">Configurações</h2>
+                    <div class="mb-4">
+                        <label for="playerName" class="block text-lg">Nome do Jogador:</label>
+                        <input type="text" id="playerName" class="w-full p-2 rounded-lg text-black">
+                    </div>
+                    <div class="flex justify-between mb-4 space-x-2">
+                        <button id="startButton" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-full">Começar</button>
+                        <button id="pauseButton" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded w-32">Pausar</button>
+                        <button id="resetButton" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded w-full">Reiniciar</button>
+                    </div>
+                    <div class="mb-4">
+                        <h3 class="text-xl font-bold">Tempo:</h3>
+                        <p id="timer" class="text-2xl">00:00</p>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold mb-4">Ranking</h2>
+                        <ul id="ranking" class="list-disc pl-5">
+                            <!-- Ranking items will be added aqui dinamicamente -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal para exibir habilidades -->
+        <div class="modal" id="skillsModal">
+            <div class="modal-content">
+                <h2 class="text-2xl font-bold mb-4">Você Descobriu Minhas Habilidades:</h2>
+                <div class="skills-container grid grid-cols-3 gap-4">
+                    <div class="skill">
+                        <img src="static/memory/back/python.png" alt="Python">
+                        <p>Python</p>
+                    </div>
+                    <div class="skill">
+                        <img src="static/memory/back/java.png" alt="Java">
+                        <p>Java</p>
+                    </div>
+                    <div class="skill">
+                        <img src="static/memory/back/sql.png" alt="SQL">
+                        <p>SQL</p>
+                    </div>
+                    <div class="skill">
+                        <img src="static/memory/back/postgresql.png" alt="PostgreSQL">
+                        <p>PostgreSQL</p>
+                    </div>
+                    <div class="skill">
+                        <img src="static/memory/back/aws.png" alt="AWS">
+                        <p>AWS</p>
+                    </div>
+                    <div class="skill">
+                        <img src="static/memory/back/docker.png" alt="Docker">
+                        <p>Docker</p>
+                    </div>
+                    <div class="skill">
+                        <img src="static/memory/back/git.png" alt="Git">
+                        <p>Git</p>
+                    </div>
+                    <div class="skill">
+                        <img src="static/memory/back/github.png" alt="GitHub">
+                        <p>GitHub</p>
+                    </div>
+                    <div class="skill">
+                        <img src="static/memory/back/javascript.png" alt="JavaScript">
+                        <p>JavaScript</p>
+                    </div>
+                    <div class="skill">
+                        <img src="static/memory/back/nodejs.png" alt="Node.js">
+                        <p>Node.js</p>
+                    </div>
+                    <div class="skill">
+                        <img src="static/memory/back/react.png" alt="React">
+                        <p>React</p>
+                    </div>
+                    <div class="skill">
+                        <img src="static/memory/back/go.png" alt="Go">
+                        <p>Go</p>
+                    </div>
+                </div>
+                <button class="mt-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onclick="closeModal()">Fechar</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let cards = []; // Array para armazenar as cartas
+        let isPaused = false; // Variável para controlar o estado de pausa
+
+        function fetchImages() {
+            fetch('/api/images')
+                .then(response => response.json())
+                .then(images => {
+                    cards = images.map((img, index) => ({
+                        id: index + 1,
+                        img: `static/memory/back/${img}`,
+                        alt: img
+                    })).flatMap(card => [card, { ...card }]); // Duplicar cada imagem para o jogo
+                });
+        }
+
+        function createBoard() {
+            const gameBoard = document.getElementById('gameBoard');
+            gameBoard.innerHTML = '';
+            shuffle(cards).forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.classList.add('card', 'relative', 'w-24', 'h-24', 'cursor-pointer');
+                cardElement.dataset.id = card.id;
+                cardElement.innerHTML = `
+                    <div class="card-inner relative w-full h-full">
+                        <div class="card-front absolute w-full h-full bg-white flex items-center justify-center">
+                            <img src="static/memory/front/card_front_image.png" alt="Imagem de frente do cartão"> <!-- Imagem de frente -->
+                        </div>
+                        <div class="card-back absolute w-full h-full bg-white flex items-center justify-center">
+                            <img src="${card.img}" alt="${card.alt}"> <!-- Imagem de verso -->
+                        </div>
+                    </div>
+                `;
+                cardElement.addEventListener('click', flipCard);
+                gameBoard.appendChild(cardElement);
+            });
+            gameBoard.classList.remove('hidden'); // Mostrar o tabuleiro
+        }
+
+        // Funções adicionais para o jogo
+        let firstCard, secondCard;
+        let hasFlippedCard = false;
+        let lockBoard = false;
+        let matches = 0;
+        let timerInterval;
+        let seconds = 0;
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function flipCard() {
+            if (lockBoard || isPaused) return; // Impedir cliques se o jogo estiver pausado
+            if (this === firstCard) return;
+
+            this.classList.add('flipped');
+
+            if (!hasFlippedCard) {
+                hasFlippedCard = true;
+                firstCard = this;
+                return;
+            }
+
+            secondCard = this;
+            checkForMatch();
+        }
+
+        function checkForMatch() {
+            let isMatch = firstCard.dataset.id === secondCard.dataset.id;
+            isMatch ? disableCards() : unflipCards();
+        }
+
+        function disableCards() {
+            firstCard.removeEventListener('click', flipCard);
+            secondCard.removeEventListener('click', flipCard);
+            resetBoard();
+            matches++;
+            if (matches === cards.length / 2) {
+                clearInterval(timerInterval);
+                addToRanking();
+                alert("Você ganhou!");
+                showSkillsModal(); // Exibir modal de habilidades
+            }
+        }
+
+        function unflipCards() {
+            lockBoard = true;
+            setTimeout(() => {
+                firstCard.classList.remove('flipped');
+                secondCard.classList.remove('flipped');
+                resetBoard();
+            }, 1500);
+        }
+
+        function resetBoard() {
+            [hasFlippedCard, lockBoard] = [false, false];
+            [firstCard, secondCard] = [null, null];
+        }
+
+        function startGame() {
+            const playerName = document.getElementById('playerName').value.trim();
+            if (!validatePlayerName(playerName)) {
+                alert("Por favor, insira um nome válido.");
+                return;
+            }
+            matches = 0;
+            seconds = 0;
+            document.getElementById('timer').textContent = '00:00';
+            clearInterval(timerInterval);
+            timerInterval = setInterval(updateTimer, 1000);
+            createBoard();
+        }
+
+        function updateTimer() {
+            seconds++;
+            const minutes = Math.floor(seconds / 60);
+            const displaySeconds = seconds % 60;
+            document.getElementById('timer').textContent = `${String(minutes).padStart(2, '0')}:${String(displaySeconds).padStart(2, '0')}`;
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+        }
+
+        function addToRanking() {
+            const playerName = document.getElementById('playerName').value || 'Anônimo';
+            const time = document.getElementById('timer').textContent;
+            const rankingList = document.getElementById('ranking');
+            const listItem = document.createElement('li');
+            listItem.textContent = `${playerName} - ${time}`;
+            rankingList.appendChild(listItem);
+        }
+
+        function validatePlayerName(name) {
+            const offensiveWords = ["palavrão1", "palavrão2"]; // Adicione palavras ofensivas aqui
+            const regex = /^[a-zA-ZÀ-ÿ\s]+$/; // Permitir apenas letras e espaços
+            return name.length > 0 && !offensiveWords.includes(name.toLowerCase()) && regex.test(name);
+        }
+
+        function showSkillsModal() {
+            const modal = document.getElementById('skillsModal');
+            modal.style.visibility = 'visible'; // Exibir modal
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('skillsModal');
+            modal.style.visibility = 'hidden'; // Ocultar modal
+        }
+
+        document.getElementById('toggleSidebar').addEventListener('click', () => {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('expanded');
+            sidebar.classList.toggle('collapsed');
+            const spans = sidebar.querySelectorAll('span');
+            spans.forEach(span => span.classList.toggle('hidden'));
+        });
+
+        document.getElementById('startButton').addEventListener('click', startGame);
+        document.getElementById('pauseButton').addEventListener('click', () => {
+            isPaused = !isPaused; // Alternar estado de pausa
+            if (isPaused) {
+                clearInterval(timerInterval);
+                document.getElementById('pauseButton').textContent = "Voltar"; // Mudar texto do botão
+            } else {
+                timerInterval = setInterval(updateTimer, 1000);
+                document.getElementById('pauseButton').textContent = "Pausar"; // Mudar texto do botão
+            }
+        });
+        document.getElementById('resetButton').addEventListener('click', () => {
+            clearInterval(timerInterval);
+            document.getElementById('timer').textContent = '00:00';
+            createBoard();
+        });
+
+        window.onload = fetchImages; // Chama a função para buscar as imagens ao carregar a página
+    </script>
+</body>
+
+</html>

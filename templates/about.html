@@ -1,0 +1,235 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   About - Ian Santos
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .sidebar {
+            transition: width 0.3s;
+        }
+
+        .sidebar.expanded {
+            width: 200px;
+        }
+
+        .sidebar.collapsed {
+            width: 60px;
+        }
+
+        .flag:hover {
+            transform: scale(1.1);
+            transition: transform 0.2s;
+        }
+
+        .dark .bg-white {
+            background-color: #2a4365;
+        }
+
+        .dark .text-gray-600, .dark .text-black {
+            color: #f7fafc;
+        }
+
+        .dark .bg-gray-100 {
+            background-color: #1a202c;
+        }
+
+        .dark .bg-blue-600 {
+            background-color: #1a202c;
+        }
+
+        .dark .text-white-important {
+            color: #ffffff !important;
+        }
+  </style>
+  <script>
+   const apiKey = "0f589a67-653f-48d4-8e10-ae561e883d26:fx";
+
+        async function translateText(text, targetLang) {
+            const response = await fetch(`https://api-free.deepl.com/v2/translate?auth_key=${apiKey}&text=${encodeURIComponent(text)}&target_lang=${targetLang}`);
+            const data = await response.json();
+            return data.translations[0].text;
+        }
+
+        async function translatePage(targetLang) {
+            const elementsToTranslate = document.querySelectorAll('[data-translate]');
+            for (const element of elementsToTranslate) {
+                const text = element.getAttribute('data-translate');
+                const translatedText = await translateText(text, targetLang);
+                element.innerText = translatedText;
+            }
+        }
+
+        function translateToPortugues() {
+            translatePage('PT-BR');
+        }
+
+        function translateToEnglish() {
+            translatePage('EN');
+        }
+
+        function translateToSpanish() {
+            translatePage('ES');
+        }
+
+        function translateToFrench() {
+            translatePage('FR');
+        }
+
+        function translateToGerman() {
+            translatePage('DE');
+        }
+
+        function translateToMandarin() {
+            translatePage('ZH');
+        }
+
+        function translateToJapanese() {
+            translatePage('JA');
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            body.classList.toggle("dark");
+
+            if (body.classList.contains("dark")) {
+                const buttonBackground = document.querySelector('.bg-yellow-400');
+                if (buttonBackground) {
+                    buttonBackground.classList.remove("bg-yellow-400");
+                    buttonBackground.classList.add("bg-blue-900");
+                }
+            } else {
+                const buttonBackground = document.querySelector('.bg-blue-900');
+                if (buttonBackground) {
+                    buttonBackground.classList.remove("bg-blue-900");
+                    buttonBackground.classList.add("bg-yellow-400");
+                }
+            }
+        }
+  </script>
+ </head>
+ <body class="bg-gray-100 dark:bg-gray-900 flex">
+  <div class="sidebar bg-blue-600 dark:bg-blue-900 text-white h-screen collapsed flex flex-col" id="sidebar">
+   <div class="flex items-center justify-between p-4">
+    <button class="text-white focus:outline-none" id="toggleSidebar">
+     <i class="fas fa-bars">
+     </i>
+    </button>
+    <div class="container mx-auto mt-2 flex justify-between items-center">
+     <span class="ml-2 text-lg font-bold hidden">
+      Ian Santos
+     </span>
+    </div>
+   </div>
+   <nav class="flex flex-col mt-4">
+    <a class="flex items-center p-4 hover:bg-blue-700 dark:hover:bg-blue-800" href="/">
+        <i class="fas fa-home"></i>
+        <span class="ml-2 hidden">Home</span>
+    </a>
+    <a class="flex items-center p-4 hover:bg-blue-700 dark:hover:bg-blue-800" href="/about">
+        <i class="fas fa-info-circle"></i>
+        <span class="ml-2 hidden" data-translate="About">About</span>
+    </a>
+    <a class="flex items-center p-4 hover:bg-blue-700 dark:hover:bg-blue-800" href="/projects">
+        <i class="fas fa-project-diagram"></i>
+        <span class="ml-2 hidden" data-translate="Projects">Projects</span>
+    </a>
+    <a class="flex items-center p-4 hover:bg-blue-700 dark:hover:bg-blue-800" href="/skills">
+        <i class="fas fa-laptop-code"></i>
+        <span class="ml-2 hidden" data-translate="Skills">Skills</span>
+    </a>
+    <a class="flex items-center p-4 hover:bg-blue-700 dark:hover:bg-blue-800" href="/contact">
+        <i class="fas fa-envelope"></i>
+        <span class="ml-2 hidden" data-translate="Contacts">Contacts</span>
+    </a>
+</nav> </a>
+   </nav>
+  </div>
+  <main class="flex flex-col lg:flex-row w-full p-4 mt-2">
+   <aside class="w-full lg:w-1/3 p-4 mt-2">
+    <!-- Light/Dark Toggle Button -->
+    <div class="relative inline-block w-20 h-7 mb-4">
+     <input class="hidden" id="toggle" onchange="toggleTheme()" type="checkbox"/>
+     <label class="cursor-pointer" for="toggle">
+      <div class="w-full h-full flex items-center justify-between bg-yellow-400 dark:bg-blue-900 rounded-full p-1 transition-colors duration-500">
+       <div class="w-5 h-5 bg-white rounded-full shadow-md flex items-center justify-center">
+        <i class="fas fa-sun text-yellow-400">
+        </i>
+       </div>
+       <div class="w-5 h-5 bg-white rounded-full shadow-md flex items-center justify-center">
+        <i class="fas fa-moon text-blue-900">
+        </i>
+       </div>
+      </div>
+     </label>
+    </div>
+    <!-- Profile Card -->
+    <div class="bg-white p-4 rounded-lg shadow-md mb-6 dark:bg-blue-800 dark:text-white" style="margin-top: 15px; max-width: 300px;">
+     <h2 class="text-xl font-bold mb-4 text-black dark:text-white-important" data-translate="Profile">
+      Profile
+     </h2>
+     <img alt="User profile picture with a smiling person" class="rounded-full mx-auto mb-4" height="100" src="static/images/foto_ian_rosto.png" width="150"/>
+     <h3 class="text-center text-lg font-semibold text-black dark:text-white-important">
+      Ian Santos
+     </h3>
+     <p class="text-center text-gray-600 dark:text-gray-400">
+      FullStack Python and Java
+     </p>
+    </div>
+   </aside>
+   <section class="w-full lg:w-3/4 p-4 mt-2 flex flex-col">
+    <!-- Language Flags -->
+    <div class="flex justify-end space-x-4 mb-4" style="margin-top: 5px;">
+     <img alt="Flag of Brazil" class="flag cursor-pointer" height="15" onclick="translateToPortugues()" src="static/icons/brasil.png" width="30"/>
+     <img alt="Flag of the United States" class="flag cursor-pointer" height="15" onclick="translateToEnglish()" src="static/icons/usa.png" width="30"/>
+     <img alt="Flag of Spain" class="flag cursor-pointer" height="15" onclick="translateToSpanish()" src="static/icons/espanha.png" width="30"/>
+     <img alt="Flag of France" class="flag cursor-pointer" height="15" onclick="translateToFrench()" src="static/icons/franca.png" width="30"/>
+     <img alt="Flag of Germany" class="flag cursor-pointer" height="15" onclick="translateToGerman()" src="static/icons/alemanha.png" width="30"/>
+     <img alt="Flag of China" class="flag cursor-pointer" height="15" onclick="translateToMandarin()" src="static/icons/china.png" width="30"/>
+     <img alt="Flag of Japan" class="flag cursor-pointer" height="15" onclick="translateToJapanese()" src="static/icons/japao.png" width="30"/>
+    </div>
+    <!-- About Card -->
+    <div class="bg-white p-4 rounded-lg shadow-md mb-6 dark:bg-blue-800 dark:text-white" style="margin-top: 20px;">
+     <h2 class="text-2xl font-bold mb-8 text-black dark:text-white-important" data-translate="About">
+      About
+     </h2>
+     <p class="mb-6 text-black dark:text-white-important" data-translate="Sou Ian Santos, um profissional multidisciplinar com mais de 7 anos de experiência em desenvolvimento back-end, automação e liderança estratégica em tecnologia. Minha missão é transformar ideias em soluções digitais inteligentes que impulsionem eficiência e inovação.">
+      Sou Ian Santos, um profissional multidisciplinar com mais de 7 anos de experiência em desenvolvimento back-end, automação e liderança estratégica em tecnologia. Minha missão é transformar ideias em soluções digitais inteligentes que impulsionem eficiência e inovação.
+     </p>
+     <p class="mb-6 text-black dark:text-white-important" data-translate="Atualmente, atuo como Chefe do Departamento de TI da Prefeitura de Palmeiras-BA, onde lidero a modernização de processos administrativos através da digitalização e integração de sistemas em nuvem, otimizando em mais de 30% o tempo e os recursos dedicados às tarefas operacionais. Paralelamente, sou fundador e CEO do GRUPO IO SANTOS, uma empresa dedicada ao desenvolvimento de soluções tecnológicas personalizadas que integram inteligência artificial e aprendizado de máquina, atendendo clientes de diferentes setores.">
+      Atualmente, atuo como Chefe do Departamento de TI da Prefeitura de Palmeiras-BA, onde lidero a modernização de processos administrativos através da digitalização e integração de sistemas em nuvem, otimizando em mais de 30% o tempo e os recursos dedicados às tarefas operacionais. Paralelamente, sou fundador e CEO do GRUPO IO SANTOS, uma empresa dedicada ao desenvolvimento de soluções tecnológicas personalizadas que integram inteligência artificial e aprendizado de máquina, atendendo clientes de diferentes setores.
+     </p>
+     <p class="mb-6 text-black dark:text-white-important" data-translate="Ao longo de minha trajetória, participei de projetos estratégicos como a implementação de sistemas de gestão para escritórios de advocacia, automação de processos licitatórios e criação de ferramentas para gestão pública e privada. Em um dos casos mais marcantes, desenvolvi e implementei um sistema de envio de documentação que aumentou a segurança das informações e impediu em 40% o retrabalho com arquivamento físico.">
+      Ao longo de minha trajetória, participei de projetos estratégicos como a implementação de sistemas de gestão para escritórios de advocacia, automação de processos licitatórios e criação de ferramentas para gestão pública e privada. Em um dos casos mais marcantes, desenvolvi e implementei um sistema de envio de documentação via nuvem que aumentou a segurança das informações e impediu em 40% o retrabalho com arquivamento físico.
+     </p>
+     <p class="mb-6 text-black dark:text-white-important" data-translate="Tenho como objetivo constante promover a transformação digital e capacitar equipes para que alcancem resultados completos, sempre alinhados às melhores práticas e normas de compliance.">
+      Tenho como objetivo constante promover a transformação digital e capacitar equipes para que alcancem resultados completos, sempre alinhados às melhores práticas e normas de compliance.
+     </p>
+     <p class="mb-6 text-black dark:text-white-important" data-translate="Fora do ambiente profissional, me dedico a projetos de impacto social, como mentorias voluntárias, e ao desenvolvimento contínuo de habilidades em Python, Java e tecnologias emergentes, acreditando que a educação e a tecnologia podem criar oportunidades e transformar realidades.">
+      Fora do ambiente profissional, me dedico a projetos de impacto social, como mentorias voluntárias, e ao desenvolvimento contínuo de habilidades em Python, Java e tecnologias emergentes, acreditando que a educação e a tecnologia podem criar oportunidades e transformar realidades.
+     </p>
+    </div>
+   </section>
+  </main>
+  <script>
+   const toggleSidebar = document.getElementById('toggleSidebar');
+        const sidebar = document.getElementById('sidebar');
+
+        toggleSidebar.addEventListener('click', () => {
+            sidebar.classList.toggle('expanded');
+            sidebar.classList.toggle('collapsed');
+            const spans = sidebar.querySelectorAll('span');
+            spans.forEach(span => span.classList.toggle('hidden'));
+        });
+  </script>
+ </body>
+</html>
