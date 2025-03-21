@@ -2,7 +2,7 @@ from flask import Flask, render_template, jsonify
 import requests 
 import os 
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../frontend/static', template_folder='../frontend')
 
 # Definindo a rota principal
 @app.route('/')
