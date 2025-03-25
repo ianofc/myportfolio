@@ -95,4 +95,11 @@ window.addEventListener('resize', () => {
 // Inicializa a animação
 animate(); // Chama a função para iniciar a animação
 
-
+fetch('https://ianofc-portfolio.onrender.com/api/images')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data); // Manipule os dados recebidos
+    })
+    .catch(error => {
+        console.error('Erro ao buscar imagens:', error);
+    });
