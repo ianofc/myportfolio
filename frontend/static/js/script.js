@@ -103,3 +103,39 @@ fetch('https://ianofc-portfolio.onrender.com/api/images')
     .catch(error => {
         console.error('Erro ao buscar imagens:', error);
     });
+
+    // script.js
+
+// Função para buscar imagens do backend
+function fetchImages() {
+  fetch('https://ianofc-portfolio.onrender.com/api/images')
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok ' + response.statusText);
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log(data); // Aqui você pode manipular os dados recebidos
+          displayImages(data); // Chama a função para exibir as imagens
+      })
+      .catch(error => {
+          console.error('Erro ao buscar imagens:', error);
+      });
+}
+
+// Função para exibir as imagens na página
+function displayImages(images) {
+  const imagesContainer = document.getElementById('images-container'); // Certifique-se de que este ID existe no seu HTML
+  imagesContainer.innerHTML = ''; // Limpa o conteúdo anterior
+
+  images.forEach(image => {
+      const imgElement = document.createElement('img');
+      imgElement.src = `https://ianofc-portfolio.onrender.com/static/memory/back/${image}`; // Ajuste o caminho conforme necessário
+      imgElement.alt = image;
+      imagesContainer.appendChild(imgElement); // Adiciona a imagem ao contêiner
+  });
+}
+
+// Chama a função para buscar as imagens quando a página carrega
+document.addEventListener('DOMContentLoaded', fetchImages);
