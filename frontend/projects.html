@@ -1,0 +1,382 @@
+<!DOCTYPE html> 
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" /> <!-- Define a codificação de caracteres como UTF-8 -->
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" /> <!-- Configura a viewport para responsividade -->
+    <title>
+        Projects - Ian Santos <!-- Título da página -->
+    </title>
+    <script src="https://cdn.tailwindcss.com"></script> <!-- Importa o Tailwind CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" /> <!-- Importa o Font Awesome para ícones -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet" /> <!-- Importa a fonte Roboto -->
+    <style>
+        /* Estilo do corpo da página */
+        body {
+            font-family: 'Roboto', sans-serif; /* Define a fonte do corpo */
+        }
+
+        /* Estilo da barra lateral */
+        .sidebar {
+            transition: width 0.3s; /* Transição suave para a largura da barra lateral */
+        }
+
+        .sidebar.expanded {
+            width: 200px; /* Largura quando expandida */
+        }
+
+        .sidebar.collapsed {
+            width: 60px; /* Largura quando colapsada */
+        }
+
+        /* Efeito de hover nas bandeiras */
+        .flag:hover {
+            transform: scale(1.1); /* Aumenta a bandeira ao passar o mouse */
+            transition: transform 0.2s; /* Transição suave */
+        }
+
+        /* Estilos para o tema escuro */
+        .dark .bg-white {
+            background-color: #2a4365; /* Cor de fundo no tema escuro */
+        }
+
+        .dark .text-gray-600,
+        .dark .text-black {
+            color: #f7fafc; /* Cor do texto no tema escuro */
+        }
+
+        .dark .bg-gray-100 {
+            background-color: #1a202c; /* Cor de fundo para elementos no tema escuro */
+        }
+
+        .dark .bg-blue-600 {
+            background-color: #1a202c; /* Cor de fundo azul no tema escuro */
+        }
+
+        .dark .text-white-important {
+            color: #ffffff !important; /* Cor do texto importante no tema escuro */
+        }
+
+        .dark .carousel-container {
+            background: linear-gradient(to right, #1a202c, #2d3748); /* Gradiente de fundo no tema escuro */
+        }
+
+        /* Estilo do contêiner do carrossel */
+        .carousel-container {
+            margin-top: 20px; /* Margem superior */
+            width: 100%; /* Largura total */
+            max-width: 5000px; /* Largura máxima */
+            margin-left: 200px; /* Margem esquerda */
+            margin-right: auto; /* Margem direita automática */
+        }
+
+        /* Estilo do carrossel */
+        .carousel {
+            display: flex; /* Exibe os itens em linha */
+            overflow: hidden; /* Oculta o excesso */
+        }
+
+        /* Estilo dos itens do carrossel */
+        .carousel-item {
+            min-width: 100%; /* Largura mínima de 100% */
+            transition: transform 0.5s ease; /* Transição suave para transformação */
+        }
+
+        /* Estilo da imagem principal */
+        .main-image {
+            width: 8000px; /* Largura da imagem principal */
+            height: auto; /* Altura automática */
+            object-fit: cover; /* Cobre o espaço disponível */
+            margin-left: 50px; /* Margem esquerda */
+        }
+
+        .project-details {
+    display: flex; /* Usar Flexbox para alinhar os itens */
+    flex-direction: column; /* Alinhar os itens em coluna */
+    justify-content: flex-start; /* Alinhar no início do contêiner */
+    height: 100%; /* Garantir que o contêiner ocupe toda a altura */
+}
+
+.thumbnail-container {
+    display: flex; /* Usar Flexbox para alinhar as miniaturas */
+    flex-wrap: wrap; /* Permitir que as miniaturas quebrem para a próxima linha */
+    gap: 10px; /* Espaçamento entre as miniaturas */
+    margin-top: 10px; /* Margem superior para separar do título e descrição */
+}
+
+.thumbnail {
+    width: 100%; /* Largura total do contêiner */
+    max-width: 150px; /* Largura máxima das miniaturas */
+    height: auto; /* Altura automática para manter a proporção */
+    object-fit: cover; /* Cobre o espaço disponível mantendo a proporção */
+    border-radius: 8px; /* Bordas arredondadas */
+    transition: transform 0.2s; /* Transição suave ao passar o mouse */
+}
+
+.thumbnail:hover {
+    transform: scale(1.05); /* Aumenta a miniatura ao passar o mouse */
+    cursor: pointer; /* Cursor de ponteiro ao passar o mouse */
+}
+
+        /* Estilos do modal */
+        .modal {
+            display: none; /* Oculto por padrão */
+            position: fixed; /* Fica fixo na tela */
+            z-index: 1000; /* Fica acima de outros elementos */
+            left: 0; /* Alinhado à esquerda */
+            top: 0; /* Alinhado ao topo */
+            width: 100%; /* Largura total */
+            height: 100%; /* Altura total */
+            overflow: auto; /* Habilita rolagem se necessário */
+            background-color: rgb(0, 0, 0); /* Cor de fundo */
+            background-color: rgba(0, 0, 0, 0.9 ); /* Preto com opacidade */
+            justify-content: center; /* Centraliza o conteúdo */
+            align-items: center; /* Centraliza o conteúdo */
+        }
+
+        .modal-content {
+            margin: auto; /* Margem AUTOMATICA */
+            display: block; /* Exibe o conteúdo do modal */
+            width: 80%; /* Largura do modal */
+            max-width: 700px; /* Largura máxima do modal */
+        }
+
+        .close {
+            position: absolute; /* Posição absoluta */
+            top: 20px; /* Distância do topo */
+            right: 35px; /* Distância da direita */
+            color: white; /* Cor do texto */
+            font-size: 40px; /* Tamanho da fonte */
+            font-weight: bold; /* Negrito */
+            transition: 0.3s; /* Transição suave */
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb; /* Cor ao passar o mouse */
+            text-decoration: none; /* Remove sublinhado */
+            cursor: pointer; /* Cursor de ponteiro */
+        }
+
+    </style>
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-900 flex">
+    <div class="sidebar bg-blue-600 dark:bg-blue-900 text-white h-screen collapsed flex flex-col" id="sidebar">
+        <div class="flex items-center justify-between p-4">
+            <button class="text-white focus:outline-none" id="toggleSidebar">
+                <i class="fas fa-bars"></i> <!-- Ícone do menu -->
+            </button>
+            <div class="container mx-auto mt-2 flex justify-between items-center">
+                <span class="ml-2 text-lg font-bold hidden">Ian Santos</span> <!-- Nome do usuário -->
+            </div>
+        </div>
+        <nav class="flex flex-col mt-4">
+            <a class="flex items-center p-4 hover:bg-blue-700 dark:hover:bg-blue-800" href="/">
+                <i class="fas fa-home"></i> <!-- Ícone da página inicial -->
+                <span class="ml-2 hidden">Home</span> <!-- Link para a página inicial -->
+            </a>
+            <a class="flex items-center p-4 hover:bg-blue-700 dark:hover:bg-blue-800" href="/about">
+                <i class="fas fa-info-circle"></i> <!-- Ícone da página sobre -->
+                <span class="ml-2 hidden" data-translate="About">About</span> <!-- Link para a página sobre -->
+            </a>
+            <a class="flex items-center p-4 hover:bg-blue-700 dark:hover:bg-blue-800" href="/projects">
+                <i class="fas fa-project-diagram"></i> <!-- Ícone da página de projetos -->
+                <span class="ml-2 hidden" data-translate="Projects">Projects</span> <!-- Link para a página de projetos -->
+            </a>
+            <a class="flex items-center p-4 hover:bg-blue-700 dark:hover:bg-blue-800" href="/skills">
+                <i class="fas fa-laptop-code"></i> <!-- Ícone da página de habilidades -->
+                <span class="ml-2 hidden" data-translate="Skills">Skills</span> <!-- Link para a página de habilidades -->
+            </a>
+            <a class="flex items-center p-4 hover:bg-blue-700 dark:hover:bg-blue-800" href="/contact">
+                <i class="fas fa-envelope"></i> <!-- Ícone da página de contatos -->
+                <span class="ml-2 hidden" data-translate="Contacts">Contacts</span> <!-- Link para a página de contatos -->
+            </a>
+        </nav>
+    </div>
+    <main class="flex flex-col w-full p-4 mt-2">
+        <div class="flex justify-between items-center w-full p-4 mt-2">
+            <div class="relative inline-block w-20 h-7 mb-4">
+                <input class="hidden" id="toggle" onchange="toggleTheme()" type="checkbox" /> <!-- Checkbox para alternar tema -->
+                <label class="cursor-pointer" for="toggle">
+                    <div class="w-full h-full flex items-center justify-between bg-yellow-400 dark:bg-blue-900 rounded-full p-1 transition-colors duration-500">
+                        <div class="w-5 h-5 bg-white rounded-full shadow-md flex items-center justify-center">
+                            <i class="fas fa-sun text-yellow-400"></i> <!-- Ícone do sol -->
+                        </div>
+                        <div class="w-5 h-5 bg-white rounded-full shadow-md flex items-center justify-center">
+                            <i class="fas fa-moon text-blue-900"></i <!-- Ícone da lua -->
+                        </div>
+                    </div>
+                </label>
+            </div>
+
+            <!-- Bandeiras de idiomas -->
+            <div class="flex justify-end space-x-4 mb-4" style="margin-top: 5px;">
+                <img alt="Bandeira do Brasil" class="flag cursor-pointer" height="15" onclick="translateToPortugues()" src="static/icons/brasil.png" width="30" /> <!-- Bandeira do Brasil -->
+                <img alt="Bandeira dos Estados Unidos" class="flag cursor-pointer" height="15" onclick="translateToEnglish()" src="static/icons/usa.png" width="30" /> <!-- Bandeira dos EUA -->
+                <img alt="Bandeira da Espanha" class="flag cursor-pointer" height="15" onclick="translateToSpanish()" src="static/icons/espanha.png" width="30" /> <!-- Bandeira da Espanha -->
+                <img alt="Bandeira da França" class="flag cursor-pointer" height="15" onclick="translateToFrench()" src="static/icons/franca.png" width="30" /> <!-- Bandeira da França -->
+                <img alt="Bandeira da Alemanha" class="flag cursor-pointer" height="15" onclick="translateToGerman()" src="static/icons/alemanha.png" width="30" /> <!-- Bandeira da Alemanha -->
+                <img alt="Bandeira da China" class="flag cursor-pointer" height="15" onclick="translateToMandarin()" src="static/icons/china.png" width="30" /> <!-- Bandeira da China -->
+                <img alt="Bandeira do Japão" class="flag cursor-pointer" height="15" onclick="translateToJapanese()" src="static/icons/japao.png" width="30" /> <!-- Bandeira do Japão -->
+            </div>
+        </div>
+        <div class="carousel-container bg-gradient-to-r from-blue-900 to-blue-700 dark:from-gray-800 dark:to-gray-600 p-7 rounded-lg justify-center mx-auto relative" style="max-width: 1000px;">
+            <h2 class="text-white text-lg mb-2" data-translate="PROJETOS NO GITHUB.COM/IANOFC">
+                PROJETOS NO GITHUB.COM/IANOFC <!-- Título do carrossel -->
+            </h2>
+            <div class="relative flex">
+                <div class="relative w-2/3">
+                    <img alt="Captura de tela do projeto principal" class="w-full h-96 object-cover" height="450" id="main-image"
+                        src="https://github.com/ianofc/gerador_resumos/raw/main/assets/images/tema.png"
+                        width="800" /> <!-- Imagem principal do projeto -->
+                    <button
+                        class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 p-2 rounded-full"
+                        id="prev-btn">
+                        <i class="fas fa-chevron-left text-white"></i> <!-- Botão anterior -->
+                    </button>
+                </div>
+                <div class="w-1/3 bg-black bg-opacity-50 p-4 h-96 overflow-y-auto">
+                    <h2 class="text-white text-xl font-semibold" id="project-title" data-translate="Project Title">
+                        Project Title <!-- Título do projeto -->
+                    </h2>
+                    <div class="grid grid-cols-2 gap-2 mt-2">
+                        <img alt="Captura de tela do projeto 1" class="thumbnail w-full h-20 object-cover" height="100" id="thumbnail-1"
+                            src='https://github.com/ianofc/${repoName}/raw/master/assets/images/img1.png'
+                            width="150" onclick="openModal(this.src)" /> <!-- Miniatura do projeto 1 -->
+                        <img alt="Captura de tela do projeto 2" class="thumbnail w-full h-20 object-cover" height="100" id="thumbnail-2"
+                            src='https://github.com/ianofc/${repoName}/raw/master/assets/images/img2.png'
+                            width="150" onclick="openModal(this.src)" /> <!-- Miniatura do projeto 2 -->
+                        <img alt="Captura de tela do projeto 3" class="thumbnail w-full h-20 object-cover" height="100" id="thumbnail-3"
+                            src='https://github.com/ianofc/${repoName}/raw/master/assets/images/img3.png'
+                            width="150" onclick="openModal(this.src)" /> <!-- Miniatura do projeto 3 -->
+                        <img alt="Captura de tela do projeto 4" class="thumbnail w-full h-20 object ```html
+                            cover" height="100" id="thumbnail-4"
+                            src='https://github.com/ianofc/${repoName}/raw/master/assets/images/img4.png'
+                            width="150" onclick="openModal(this.src)" /> <!-- Miniatura do projeto 4 -->
+                    </div>
+                    <p class="mt-3 text-white text-lg" id="project-description" data-translate="Project description goes here">
+                        Project description goes here. <!-- Descrição do projeto -->
+                    </p>
+                    <div class="mt-4 flex space-x-2 text-white" id="project-tools">
+                        <!-- Ferramentas serão injetadas aqui -->
+                    </div>
+                </div>
+                <button
+                    class="absolute right-1/3 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 p-2 rounded-full"
+                    id="next-btn">
+                    <i class="fas fa-chevron-right text-white"></i> <!-- Botão próximo -->
+                </button>
+            </div>
+            <div class="flex justify-center mt-4 space-x-2" id="carousel-indicators">
+                <!-- Indicadores serão injetados aqui -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal para exibir imagens grandes -->
+    <div id="myModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span> <!-- Botão para fechar o modal -->
+        <img class="modal-content" id="img01" /> <!-- Imagem que será exibida no modal -->
+    </div>
+
+    <script>
+        const toggleSidebar = document.getElementById('toggleSidebar'); // Botão para alternar a barra lateral
+        const sidebar = document.getElementById('sidebar'); // Seleciona a barra lateral
+
+        toggleSidebar.addEventListener('click', () => {
+            sidebar.classList.toggle('expanded'); // Alterna a classe expandida
+            sidebar.classList.toggle('collapsed'); // Alterna a classe colapsada
+            const spans = sidebar.querySelectorAll('span'); // Seleciona todos os spans na barra lateral
+            spans.forEach(span => span.classList.toggle('hidden')); // Alterna a visibilidade dos spans
+        });
+
+        let currentProjectIndex = 0; // Índice do projeto atual
+        let projects = []; // Array para armazenar os projetos
+
+        // Função para buscar projetos do GitHub
+        async function fetchGitHubProjects() {
+            const response = await fetch('https://api.github.com/users/ianofc/repos'); // Faz a requisição para a API do GitHub
+            projects = await response.json(); // Armazena os projetos na variável
+            displayProject(currentProjectIndex); // Exibe o projeto atual
+            createIndicators(); // Cria os indicadores do carrossel
+        }
+
+        // Função para exibir um projeto específico
+        function displayProject(index) {
+            const project = projects[index]; // Obtém o projeto pelo índice
+            const repoName = project.name.toLowerCase(); // Nome do repositório em minúsculas
+            document.getElementById('main-image').src = `https://github.com/ianofc/${repoName}/raw/master/assets/images/tema.png`; // Atualiza a imagem principal
+            document.getElementById('project-title').innerText = project.name; // Atualiza o título do projeto
+            document.getElementById('project-description').innerText = project.description || 'No description available.'; // Atualiza a descrição do projeto
+            document.getElementById('thumbnail-1').src = `https://github.com/ianofc/${repoName}/raw/master/assets/images/img1.png`; // Atualiza a miniatura 1
+            document.getElementById('thumbnail-2').src = `https://github.com/ianofc/${repoName}/raw/master/assets/images/img2.png`; // Atualiza a miniatura 2
+            document.getElementById('thumbnail-3').src = `https://github.com/ianofc/${repoName}/raw/master/assets/images/img3.png`; // Atualiza a miniatura 3
+            document.getElementById('thumbnail-4').src = `https://github.com/ianofc/${repoName}/raw/master/assets/images/img4.png`; // Atualiza a miniatura 4
+
+            const toolsContainer = document.getElementById('project-tools'); // Seleciona o contêiner de ferramentas
+            toolsContainer.innerHTML = ''; // Limpa o contêiner
+            if (project.language) {
+                const toolIcon = document.createElement('i'); // Cria um ícone para a ferramenta
+                toolIcon.className = `fab fa -${project.language.toLowerCase()} text-xl text-white`; // Define a classe do ícone da ferramenta
+                toolsContainer.appendChild(toolIcon); // Adiciona o ícone ao contêiner de ferramentas
+            }
+
+            updateIndicators(index); // Atualiza os indicadores do carrossel
+        }
+
+        // Função para criar indicadores do carrossel
+        function createIndicators() {
+            const indicatorsContainer = document.getElementById('carousel-indicators'); // Seleciona o contêiner de indicadores
+            indicatorsContainer.innerHTML = ''; // Limpa o contêiner
+            projects.forEach((_, index) => {
+                const indicator = document.createElement('div'); // Cria um novo indicador
+                indicator.className = 'w-2 h-2 bg-gray-500 rounded-full'; // Define a classe do indicador
+                indicator.dataset.index = index; // Define o índice do indicador
+                indicator.addEventListener('click', () => {
+                    currentProjectIndex = index; // Atualiza o índice do projeto atual
+                    displayProject(index); // Exibe o projeto correspondente ao indicador
+                });
+                indicatorsContainer.appendChild(indicator); // Adiciona o indicador ao contêiner
+            });
+        }
+
+        // Função para atualizar os indicadores
+        function updateIndicators(index) {
+            const indicators = document.querySelectorAll('#carousel-indicators div'); // Seleciona todos os indicadores
+            indicators.forEach((indicator, i) => {
+                indicator.className = i === index ? 'w-2 h-2 bg-white rounded-full' : 'w-2 h-2 bg-gray-500 rounded-full'; // Atualiza a classe do indicador com base no índice
+            });
+        }
+
+        // Evento para o botão anterior
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            currentProjectIndex = (currentProjectIndex - 1 + projects.length) % projects.length; // Atualiza o índice do projeto atual
+            displayProject(currentProjectIndex); // Exibe o projeto correspondente
+        });
+
+        // Evento para o botão próximo
+        document.getElementById('next-btn').addEventListener('click', () => {
+            currentProjectIndex = (currentProjectIndex + 1) % projects.length; // Atualiza o índice do projeto atual
+            displayProject(currentProjectIndex); // Exibe o projeto correspondente
+        });
+
+        // Função para abrir o modal com a imagem grande
+        function openModal(src) {
+            const modal = document.getElementById("myModal"); // Seleciona o modal
+            const img = document.getElementById("img01"); // Seleciona a imagem do modal
+            img.src = src; // Define a fonte da imagem
+            modal.style.display = "flex"; // Exibe o modal
+        }
+
+        // Função para fechar o modal
+        function closeModal() {
+            const modal = document.getElementById("myModal"); // Seleciona o modal
+            modal.style.display = "none"; // Oculta o modal
+        }
+
+        fetchGitHubProjects(); // Chama a função para buscar projetos do GitHub
+    </script>
+</body>
+
+</html>

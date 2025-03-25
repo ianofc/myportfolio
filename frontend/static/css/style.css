@@ -1,0 +1,134 @@
+/* Estilos globais */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    text-align: center;
+}
+
+header nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+header nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+section {
+    padding: 20px;
+}
+
+ul {
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 10px;
+}
+
+a {
+    color: #007bff;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.football-field {
+    position: relative;
+    background-color: #4CAF50; /* Cor do campo */
+}
+
+.goal {
+    position: absolute;
+    width: 12%;
+    height: 5%;
+    background-color: white;
+    border: 2px solid black;
+}
+
+.center-circle {
+    position: absolute;
+    width: 25%;
+    height: 25%;
+    border: 2px solid white;
+    border-radius: 50%;
+}
+
+.halfway-line {
+    position: absolute;
+    width: 2px; /* Largura da linha do meio */
+    height: 100%; /* Altura total do campo */
+    background-color: white; /* Cor da linha */
+}
+
+.penalty-area {
+    position: absolute;
+    width: 24%; /* Largura da área de penalidade */
+    height: 40%; /* Altura da área de penalidade */
+    top: 30%; /* Posição vertical */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translateX(-50%); /* Ajusta a posição */
+    border: 2px solid white; /* Borda da área de penalidade */
+}
+
+.small-area {
+    position: absolute;
+    width: 12%; /* Largura da pequena área */
+    height: 20%; /* Altura da pequena área */
+    top: 30%; /* Posição vertical */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translateX(-50%); /* Ajusta a posição */
+    border: 2px solid white; /* Borda da pequena área */
+}
+
+.penalty-spot {
+    position: absolute;
+    width: 4px; /* Largura do ponto de penalidade */
+    height: 4px; /* Altura do ponto de penalidade */
+    background-color: white; /* Cor do ponto */
+    border-radius: 50%; /* Forma circular */
+    top: 30%; /* Posição vertical */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta a posição */
+}
+
+.corner-kick {
+    position: absolute;
+    width: 4px; /* Largura do escanteio */
+    height: 4px; /* Altura do escanteio */
+    background-color: white; /* Cor do escanteio */
+    border-radius: 50%; /* Forma circular */
+}
+
+.corner-kick.left-0 {
+    top: 10%; /* Posição do escanteio esquerdo */
+}
+
+.corner-kick.right-0 {
+    top: 10%; /* Posição do escanteio direito */
+}

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Ian Santos Portfolio</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="static/css/stylehome.css" />
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+  </script>
+  <style>
+    .flag:hover {
+      transform: scale(1.1);
+      transition: transform 0.2s;
+    }
+  </style>
+  <script>
+
+    const apiKey = "0f589a67-653f-48d4-8e10-ae561e883d26:fx";
+
+    async function translateText(text, targetLang) {
+      const response = await fetch(`https://api-free.deepl.com/v2/translate?auth_key=${apiKey}&text=${encodeURIComponent(text)}&target_lang=${targetLang}`);
+      const data = await response.json();
+      return data.translations[0].text;
+    }
+
+    async function translatePage(targetLang) {
+      const elementsToTranslate = document.querySelectorAll('[data-translate]');
+      for (const element of elementsToTranslate) {
+        const text = element.getAttribute('data-translate');
+        const translatedText = await translateText(text, targetLang);
+        element.innerText = translatedText;
+      }
+    }
+
+    function translateToPortugues() {
+      translatePage('PT-BR');
+    }
+
+    function translateToEnglish() {
+      translatePage('EN');
+    }
+
+    function translateToSpanish() {
+      translatePage('ES');
+    }
+
+    function translateToFrench() {
+      translatePage('FR');
+    }
+
+    function translateToGerman() {
+      translatePage('DE');
+    }
+
+    function translateToMandarin() {
+      translatePage('ZH');
+    }
+
+    function translateToJapanese() {
+      translatePage('JA');
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      body.classList.toggle("dark");
+
+      if (body.classList.contains("dark")) {
+        const buttonBackground = document.querySelector('.bg-yellow-400');
+        if (buttonBackground) {
+          buttonBackground.classList.remove("bg-yellow-400");
+          buttonBackground.classList.add("bg-blue-900");
+        }
+      } else {
+        const buttonBackground = document.querySelector('.bg-blue-900');
+        if (buttonBackground) {
+          buttonBackground.classList.remove("bg-blue-900");
+          buttonBackground.classList.add("bg-yellow-400");
+        }
+      }
+    }
+
+    function changeHeaderName() {
+      const headerName = document.getElementById("header-name");
+      const currentText = headerName.textContent;
+      headerName.textContent = currentText === "Ian Santos" ? "49616e2053616e746f73" : "Ian Santos";
+    }
+
+    setInterval(changeHeaderName, 20000);
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('hireMeBtn').addEventListener('click', function () {
+        const button = this;
+        button.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+        setTimeout(() => {
+          button.innerHTML = 'Hire Me!';
+          confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+          });
+          // Redirecionar para a página de contrate-me
+          window.location.href = 'hirene';
+        }, 2000);
+      });
+
+      document.getElementById('downloadCVBtn').addEventListener('click', function () {
+        const button = this;
+        const progressSpan = document.getElementById('downloadProgress');
+        let progress = 0;
+        const interval = setInterval(() => {
+          if (progress >= 100) {
+            clearInterval(interval);
+            progressSpan.innerHTML = 'Baixar CV';
+            // Criar um link para baixar o PDF
+            const link = document.createElement('a');
+            link.href = 'static/pdf/Curriculo_ian_santos.pdf'; // Caminho do PDF
+            link.download = 'Curriculo_ian_santos.pdf'; // Nome do arquivo ao baixar
+            document.body.appendChild(link);
+            link.click(); // Simula o clique para iniciar o download
+            document.body.removeChild(link); // Remove o link após o download
+          } else {
+            progress++;
+            progressSpan.innerHTML = `${progress}%`;
+          }
+        }, 100);
+      });
+    });
+
+  </script>
+</head>
+
+<body class="font-roboto bg-gray-100 dark:bg-gray-900 transition-colors duration-500">
+  <header class="bg-white dark:bg-gray-800 p-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 id="header-name" class="text-2xl font-bold text-blue-700 header-name">Ian Santos</h1>
+      <nav class="flex space-x-6">
+        <a class="nav-link" data-translate="About" href="about">
+          About
+        </a>
+        <a class="nav-link" data-translate="Projects" href="projects">
+          Projects
+        </a>
+        <a class="nav-link" data-translate="Skills" href="skills">
+          Skills
+        </a>
+        <a class="nav-link" data-translate="Contact" href="contact">
+          Contact        </a>
+      </nav>
+      <button class="bg-blue-700 text-white px-4 py-2 rounded-md flex items-center justify-center relative w-32 h-12"
+        id="hireMeBtn">
+        Hire me!
+      </button>
+    </div>
+  </header>
+
+  <div class="container mx-auto mt-4 flex justify-between items-center">
+    <div class="flex items-center space-x-4">
+      <div class="relative inline-block w-20 h-7">
+        <input type="checkbox" id="toggle" class="hidden" onchange="toggleTheme()" />
+        <label for="toggle" class="cursor-pointer">
+          <div
+            class="w-full h-full flex items-center justify-between bg-yellow-400 dark:bg-blue-900 rounded-full p-1 transition-colors duration-500">
+            <div class="w-5 h-5 bg-white rounded-full shadow-md flex items-center justify-center">
+              <i class="fas fa-sun text-yellow-400"></i>
+            </div>
+            <div class="w-5 h-5 bg-white rounded-full shadow-md flex items-center justify-center">
+              <i class="fas fa-moon text-blue-900"></i>
+            </div>
+          </div>
+        </label>
+      </div>
+    </div>
+    <div class="flex space-x-4">
+      <img alt="Flag of Brazil" class="flag cursor-pointer" height="15" onclick="translateToPortugues()"
+        src="static/icons/brasil.png" width="30" />
+      <img alt="Flag of the United States" class="flag cursor-pointer" height="15" onclick="translateToEnglish()"
+        src="static/icons/usa.png" width="30" />
+      <img alt="Flag of Spain" class="flag cursor-pointer" height="15" onclick="translateToSpanish()"
+        src="static/icons/espanha.png" width="30" />
+      <img alt="Flag of France" class="flag cursor-pointer" height="15" onclick="translateToFrench()"
+        src="static/icons/franca.png" width="30" />
+      <img alt="Flag of Germany" class="flag cursor-pointer" height="15" onclick="translateToGerman()"
+        src="static/icons/alemanha.png" width="30" />
+      <img alt="Flag of China" class="flag cursor-pointer" height="15" onclick="translateToMandarin()"
+        src="static/icons/china.png" width="30" />
+      <img alt="Flag of Japan" class="flag cursor-pointer" height="15" onclick="translateToJapanese()"
+        src="static/icons/japao.png" width="30" />
+    </div>
+  </div>
+
+  <main>
+    <div class="flex flex-col lg:flex-row justify-start items-center">
+      <div class="coluna-imagem w-full lg:w-1/3 flex justify-start mb-16 lg:mb-0">
+        <img src="static/images/foto_ian_santos.png" alt="Foto Ian Santos" class="imagem-esquerda">
+      </div>
+      <div class="text-center lg:w-1/3 flex flex-col items-center texto-sobre">
+        <h2 class="text-3xl font-bold" data-translate="Hi, I'm Ian Santos">
+          Hi, I'm Ian Santos</h2>
+        <h3 class="text-xl font-semibold text-blue-700" data-translate="Desenvolvedor Full Stack Python e Java">
+          Desenvolvedor Full Stack Python e Java</h3>
+        <p class="mt-4 text-gray-700 dark:text-white"
+          data-translate="com foco em tecnologias de nuvem, APIs, e resolução de problemas reais, buscando oportunidades para criar sistemas inteligentes e eficientes">
+          com foco em tecnologias de nuvem, APIs, e resolução de problemas reais, buscando oportunidades para criar
+          sistemas inteligentes e eficientes
+        </p>
+        <button id="downloadCVBtn"
+          class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md flex items-center justify-center w-32 h-12">
+          <i class="fas fa-download mr-2"></i>
+          <span data-translate="Baixar CV" id="downloadProgress">
+            Baixar CV
+          </span>
+        </button>
+        <div class="experience flex justify-center gap-8 mt-6">
+          <div>
+            <h4 class="text-xl font-bold text-blue-700 dark:text-white">
+              8+
+            </h4>
+            <p class="dark:text-white" data-translate="Ano de experiência">
+              Ano de experiência
+            </p>
+          </div>
+          <div>
+            <h4 class="text-xl font-bold text-blue-700 dark:text-white">
+              50+
+            </h4>
+            <p class="dark:text-white" data-translate="Projetos Concluídos">
+              Projetos Concluídos
+            </p>
+          </div>
+        </div>
+        <div class="flex justify-center space-x-4 mt-4">
+          <div class="tooltip">
+            <a class="text-green-500 text-1xl bg-white dark:bg-gray-700 p-2 w-8 h-8 rounded-full flex items-center justify-center"
+              href="https://wa.me/75992313026" target="_blank">
+              <i class="fab fa-whatsapp">
+              </i>
+            </a>
+            <span class="tooltiptext">
+              WhatsApp
+            </span>
+          </div>
+          <div class="tooltip">
+            <a class="text-gray-800 text-1xl bg-white dark:bg-gray-700 p-2 w-8 h-8 rounded-full flex items-center justify-center"
+              href="https://github.com/ianofc" target="_blank">
+              <i class="fab fa-github">
+              </i>
+            </a>
+            <span class="tooltiptext">
+              GitHub
+            </span>
+          </div>
+          <div class="tooltip">
+            <a class="text-blue-700 text-1xl bg-white dark:bg-gray-700 p-2 w-8 h-8 rounded-full flex items-center justify-center"
+              href="https://linkedin.com/in/iansantosoficial" target="_blank">
+              <i class="fab fa-linkedin">
+              </i>
+            </a>
+            <span class="tooltiptext">
+              LinkedIn
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-center lg:w-1/3">
+        <img src="static/images/backgroundhome.png" alt="Background Home" class="imagem-direita">
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-white dark:bg-gray-800 p-4 text-center">
+    <p class="text-gray-700 dark:text-gray-300" data-translate="© 2024 Ian Santos. Todos os direitos reservados.">
+      © 2024 Ian Santos. Todos os direitos reservados.
+    </p>
+  </footer>
+</body>
+
+</html>
